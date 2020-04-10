@@ -50,8 +50,8 @@ Naive Bayes is a relatively simple algorithm, but it is often found to have very
 
 We tried all three naive Bayesian models of sklearn. Among them, the polynomial model and the Bernoulli model perform relatively well, and can reach 0.902 and 0.908 after parameter adjustment(show in below), respectively. but the Gaussian model performs poorly, reaching only 0.7. The reason why the Gaussian model is less effective may be because it is mainly used in continuous random variables, but text analysis belongs to discrete variable analysis. The difference between the polynomial model and the Bernoulli model have different calculation granularities. The polynomial model uses words as the granularity, and the Bernoulli model uses files as the granularity. Therefore, the calculation methods of the a priori probability and the class conditional probability are different. When calculating the posterior probability, for a document B, in the polynomial model, only the words that have appeared in B will participate in the posterior probability calculation. While in the Bernoulli model, if a word does not appear in B but appeared in the global word list, those words will also participate in the calculation, but only as the "counter party". Therefore, the judgment criterion of the Bernoulli model is more comprehensive, which may be the reason why it is slightly better than the polynomial model. 
 
-  <img src="github.com/ksun86/ML-Project/blob/master/Bernoulli.png" width = "300" height = "200" alt="Bernoulli.png"  />
- <img src="github.com/ksun86/ML-Project/blob/master/MultinomialNB.png" width = "300" height = "200" alt="MultinomialNB.png"  />
+  <img src="/Bernoulli.png" width = "300" height = "200" alt="Bernoulli.png"  />
+ <img src="/MultinomialNB.png" width = "300" height = "200" alt="MultinomialNB.png"  />
 
 
 However, the Naive Bayes model only classifies from a priori probability point of view, its classification effect will be worse than the deep learning model which have more complicate structure and much more parameters.
