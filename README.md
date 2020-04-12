@@ -27,16 +27,18 @@ The method we use to process the raw sentences is the Doc2Vec method. The Doc2Ve
  In this project, our work mainly surrounding text analysis of fake news. We focused on mining particular linguistic cues, like, by finding anomalous patterns of pronouns, conjunctions, and words associated with negative emotional word usage. For example, that fake news often contains an inflated number of swear words and personal pronouns. The raw news be represented using the Bag-of-Words model, which then be modified to incorporate the relativity between the words. We used both supervised and unsupervised learning here.  For unsupervised learning, we used GMM and Kmeans; for supervised learning, we take a try at LSTM and a two layer neural network.
 
 ## 3.Unsupervised Method
+### 3.1 Kmeans
 
-
+### 3.2 Gaussian Mixture Model
 
 ## 4.Supervised Method
-
-
-
-### Naive Bayes Classifier 
+### 4.1 Naive Bayes Classifier 
 
 Naive Bayes is a relatively simple algorithm, but it is often found to have very good results in the field of NLP content analysis. Here we use the naive Bayes class library in scikit-learn to classify the data. Compared to decision trees, algorithms like KNN, Naive Bayes requires fewer parameters. In scikit-learn, there are 3 naive Bayes classification algorithm classes. They are GaussianNB, MultinomialNB and BernoulliNB. Among them, GaussianNB is naive Bayes with priori Gaussian distribution, MultinomialNB is naive Bayes with priori polynomial distribution, and BernoulliNB is naive Bayes with priori Bernoulli distribution.
+
+### 4.2 Support Vector Machine
+
+### 4.3 XGBoost
 
 ## 5. Deep Learning Method
 
