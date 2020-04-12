@@ -48,12 +48,20 @@ The traditional backward-propagation neural network [7] uses the fully-connected
 
 The neural network for the fake news classification task has three layers in general. The structure of the neural network is shown in Fig. 1. The first layer, which is the layer to read the primitive training data, has 300 input channels and 256 output channels. The hidden layer in the middle has 256 input channels and 80 output channels. The third layer, which the last one, has 80 input channels and 2 output channels. The activation function used between each layer in the middle is the ReLU function, while the activation function for the output layer is the sigmoid function, in order to fix the scope for the output values. To avoid the potential overfitting issue, which is common in the NLP tasks, two dropout layers are introduced between the first and second layer, and the second and third. These layers could randomly drop the neural nodes in the previous layer during the training process. To discuss effect of the dropout layers on the network, the dropout rate is changeable during the implementation.
 
+![](https://github.com/ksun86/ML-Project/blob/master/Images/BPNNStructure.png) 
+
+Fig. 1. The structure of the backward-propagation neural network
+
 ### 5.2 LSTM Network
 
-Long Short-Term Memory (LSTM) Network [4] is a neural network with recurrent structure. This deep learning model reveals impressive capability in processing the continuous sequences, since this model could find out and utilize the relationship between different samples in the same sequence. In this project, we will design two kinds of LSTM network for fake news detection, the LSTM network with single propagation direction and the bi-directional LSTM network.
+Long Short-Term Memory (LSTM) Network [8] is a neural network with recurrent structure. This deep learning model reveals impressive capability in processing the continuous sequences, since this model could find out and utilize the relationship between different samples in the same sequence. In this project, we will design two kinds of LSTM network for fake news detection, the LSTM network with single propagation direction and the bi-directional LSTM network.
 The structure of the neural network is shown in Fig. 2. Unlike other method, the vectorize method for the LSTM network is the word embedding method.  In this case, the sentence read by the network is an array with fixed length, and the content in the index of each word in the dictionary that contains the words with highest frequency. The vectorized sentences are sent into the embedding layer, so that each word in the sentence will be presented as a vector that presents its similarity with other words. The vector length for each word is 10. The LSTM network used for this project includes 300 input channels, which corresponds to the length of each sentence, and 150 hidden states. The activation function for the LSTM layer is ReLU. The sum of the elements in the vector that represents each word is calculated after the LSTM layer, and the result is sent into the fully connected layer with 150 input channels and 2 output channels. Two dropout layers locate after the embedding layer and the LSTM layer. The activation function for the output layer is the sigmoid function.
 
 As a modified version of the original LSTM network, bidirectional LSTM network (Bi-LSTM) could encode the input sentences in both directions, which makes it capable to process more complex sentences. The general structure of the Bi-LSTM network is similar to the original LSTM network. The main difference between these network is that the Bi-LSTM network has LSTM units for backward propagation, so that the output size for the Bi-LSTM layer is twice as the original LSTM layer.
+
+![](https://github.com/ksun86/ML-Project/blob/master/Images/LSTMStructure.png) 
+
+Fig. 2. The structure of the LSTM network
 
 ## 6. Evaluation and results 
 
@@ -65,8 +73,6 @@ As a modified version of the original LSTM network, bidirectional LSTM network (
 
 ![](https://github.com/ksun86/ML-Project/blob/master/title_length.png)   Example Readmes
 
-
-
 ### Results for Naive Bayes Classifier 
 
 We tried all three naive Bayesian models of sklearn. Among them, the polynomial model and the Bernoulli model perform relatively well, and can reach 0.902 and 0.908 after parameter adjustment(show in below), respectively. but the Gaussian model performs poorly, reaching only 0.7. The reason why the Gaussian model is less effective may be because it is mainly used in continuous random variables, but text analysis belongs to discrete variable analysis. The difference between the polynomial model and the Bernoulli model have different calculation granularities. The polynomial model uses words as the granularity, and the Bernoulli model uses files as the granularity. Therefore, the calculation methods of the a priori probability and the class conditional probability are different. When calculating the posterior probability, for a document B, in the polynomial model, only the words that have appeared in B will participate in the posterior probability calculation. While in the Bernoulli model, if a word does not appear in B but appeared in the global word list, those words will also participate in the calculation, but only as the "counter party". Therefore, the judgment criterion of the Bernoulli model is more comprehensive, which may be the reason why it is slightly better than the polynomial model. 
@@ -75,10 +81,34 @@ We tried all three naive Bayesian models of sklearn. Among them, the polynomial 
 <img src="/MultinomialNB.png" width = "450" height = "450" alt="MultinomialNB.png"  /> <img src="/Bernoulli.png" width = "450" height = "450" alt="Bernoulli.png"  />
  
 
-
 However, the Naive Bayes model only classifies from a priori probability point of view, its classification effect will be worse than the deep learning model which have more complicate structure and much more parameters.
 
+### 6.3 Deep Learning Methods
+#### 6.3.1 Backward-propagation Neural Network
+During the implementation, the BP neural networks are trained for 1000 epoches. The optimization method is SGD, with the learning rate of 0.01 and the 0.9 momentum. Using the Doc2Vec vectorize method, the entire dataset is sent into the model during each iteration.  Since the fake news detection task could be taken as a binary classification task, which has two kinds of labels (Real or Fake), the loss function for all the networks is BCE loss function.
+<img src="http://latex.codecogs.com/gif.latex?BCELoss = y_0 log y_0 + (1 - y_0) log (1 - y_0)" />
 
+The dropout rate for performance comparison is 0 (No dropout layer), 0.1, 0.3, 0.5, 0.7. As a binary classification problem, the output size for all the networks is 2. The expected class for the given label is the class with greater probability. The general performance of each network will be judged by the classification accuracy, while the number of the parameters for each network will also be provided.
+
+#### 6.3.2 Backward-propagation Neural Network
+Since the LSTM based neural networks are much more complicated than the BP network, the training parameters are different. The LSTM and Bi-LSTM network are trained for 50 epoches. The optimization method is SGD, with the learning rate of 0.01 and the 0.9 momentum. Considering the size of the input torch object, the entire dataset will be divided into several batches. The batch size during training and testing is 100. The loss function for this project is BCE loss function as well. Considering the structure of the model as well as the well the learning rate, the loss is scaled by 50 times for the mono-directional LSTM network, and 40 times for the Bi-LSTM network, to update the weights more effectively. The dropout rate used for performance comparison is the same as the ones for the BP neural network.
+
+#### 6.3.3 Results
+The overall classification accuracy result for each neural network is shown in Table. 1. For the traditional BP neural network, its number of parameters is 97778. The best classification result happens when the dropout rate equals to 0, which is 93.81%, though all the classification accuracy results are approximately the same. The confusion matrix for this situation is shown in Fig. 3(a).  For the LSTM network, its number of parameters for the LSTM model is 321522. The best classification result happens when the dropout rate equals to 0.3, which is 93.83%. The confusion matrix for this situation is shown in Fig. 3(b).  For the Bi-LSTM network, its number of parameters is 593022. The best classification result happens when the dropout rate equals to 0.5, which is 92.85%. The confusion matrix for this situation is shown in Fig. 3(c).  
+
+<img src="/Images/BP_Best.png" width = "300" height = "260" alt="BP_Best.png"  /><img src="/Images/LSTM_Best.png" width = "300" height = "260" alt="LSTM_Best.png"  /><img src="/Images/BiLSTM_Best.png" width = "300" height = "260" alt="BiLSTM_Best.png"  />
+
+Fig. 3. The confusion matrices (a) BP Neural Network (b) LSTM (c) BiLSTM
+
+| Network \ Dropout Rate      | 0     | 0.1    | 0.3    | 0.5    | 0.7    |
+| ---------- | :-----------:  | :-----------: | :-----------: | :-----------: | :-----------: |
+| BP Neural Network     | 93.81%     | 93.50%    | 92.97%    | 93.23%    | 92.68%    |
+| LSTM     | 89.51%     | 91.85%    | 93.83%    | 93.07%    | 90.22%    |
+| BiLSTM     | 88.59%     | 91.66%    | 92.66%    | 92.85%    | 91.07%    |
+
+Table. 1 The classification accuracy for each neural network
+
+According to the result, we can find that the best classification accuracy of the  the effect on the BP Neural Network and the LSTM model is approximately the same, while the Bi-LSTM is slightly lower. The reason for this may come from the overfitting phenomenon, since the LSTM and Bi-LSTM model use much more parameters than the BP Neural Network model. The dropout layer, on the other hand, has little effect on the BP Neural Network, while affects the performance of the LSTM and Bi-LSTM model heavily. The classification accuracy of the  LSTM and Bi-LSTM model when dropout rate is 0.3 and 0.5 is much better than the rest situations. When the dropout rate is too low, the overfitting phenomenon can easily happen due to the excessive parameters. If too many parameters are dropped out, the model may not converge with the remaining parameters. Besides, the complexity of the network structure should be appropriate. A more complex network, like the Bi-LSTM network, may not necessarily lead to a better performance. During the training process, we find that the classification accuracy can increase to 99.6% on the training dataset, when using a LSTM model with two extra fully-connected layers. However, the classification accuracy remains around 80% on the testing dataset, which is a clear example for the overfitting phenomenon.
 
 ## 7.Conclusions
 
