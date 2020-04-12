@@ -3,11 +3,9 @@
 
 ## 1. Introduction 
 
-Fake news on social media has experienced a resurgence of interest due to the recent political climate and the growing concern around its negative effect. Not only does it provide a source of spam in our lives, but fake news also has the potential to manipulate public perception and awareness in a major way. The amount of disseminated information and the rapidity of its diffusion make it practically impossible to assess reliability in a timely manner, highlighting the need for automatic fake news detection systems. In that spirit, our project centers around building a fake news detect system for text content based on data collected from news articles.
+People are spending more time on social media nowadays. Therefore misleading information could cause serious problems. A lot of people are having a difficult time classifying all the information they receive, so an algorithm detecting fake news would be useful for many.  
 
- 
-
-We start with a brief description of the data set used in the development of this system and the metric we used to measure performance, followed by each of the various approaches and algorithms we implemented.
+The goal of this project is to create and compare models for accurate prediction of fake news datasets. We start with a brief description of the data set used in the development of this system and the metric we used to measure performance, followed by each of the various approaches and algorithms we implemented.
 
 ## 2.Data set and Basic idea
 
@@ -20,15 +18,17 @@ The data set used in training and testing the detection systems comes from Kaggl
 4. text: the text of the article (could be incomplete); 
 5. label: a label that marks the article as potentially unreliable, 1 for unreliable and 0 for reliable.
 
-### Vectorize the sentences
+### Data Processing: Vectorize the sentences
 
 The method we use to process the raw sentences is the Doc2Vec method. The Doc2Vec method [5] is a modified algorithm based on the Word2Vec [6] method. The basic idea for the Word2Vec method is to map each word in the sentence into the vector and use the words in the rest part of the article to predict the next word. The prediction could be taken as a multi-class classification problem, while the generated vector contains the probability that each word in the dictionary exists in the next position. The Doc2Vec method introduces an extra unit on the top of each sentence that represents the ‘topic’ of the given sentence. In this case, each sentence could be mapped into the vector space and processed together, instead of being processed separately. In our project, the Doc2Vec method is used to process the dataset for all the machine learning method except the LSTM methods.
 
- In this project, our work mainly surrounding text analysis of fake news. We focused on mining particular linguistic cues, like, by finding anomalous patterns of pronouns, conjunctions, and words associated with negative emotional word usage. For example, that fake news often contains an inflated number of swear words and personal pronouns. The raw news be represented using the Bag-of-Words model, which then be modified to incorporate the relativity between the words. We used both supervised and unsupervised learning here.  For unsupervised learning, we used GMM and Kmeans; for supervised learning, we take a try at LSTM and a two layer neural network.
+In this project, our work mainly involves analyzing the texts. In order to reduce noise, we removed all the stop words and punctuations, then convert each article to sentences to further break down the weight each unique word carries.
+
+We focused on mining particular linguistic cues, like, by finding anomalous patterns of pronouns, conjunctions, and words associated with negative emotional word usage. For example, that fake news often contains an inflated number of swear words and personal pronouns. The raw news be represented using the Bag-of-Words model, which then be modified to incorporate the relativity between the words. We used both supervised and unsupervised learning here.  For unsupervised learning, we used GMM and Kmeans; for supervised learning, we experienmented LSTM and a two layer neural network.
 
 ## 3.Unsupervised Method
-
-
+### KMeans
+### GMM
 
 ## 4.Supervised Method
 
@@ -121,11 +121,11 @@ Fig. 6. The confusion matrices (a) BP Neural Network (b) LSTM (c) BiLSTM
 
 Table. 1 The classification accuracy for each neural network
 
-According to the result, we can find that the best classification accuracy of the  the effect on the BP Neural Network and the LSTM model is approximately the same, while the Bi-LSTM is slightly lower. The reason for this may come from the overfitting phenomenon, since the LSTM and Bi-LSTM model use much more parameters than the BP Neural Network model. The dropout layer, on the other hand, has little effect on the BP Neural Network, while affects the performance of the LSTM and Bi-LSTM model heavily. The classification accuracy of the  LSTM and Bi-LSTM model when dropout rate is 0.3 and 0.5 is much better than the rest situations. When the dropout rate is too low, the overfitting phenomenon can easily happen due to the excessive parameters. If too many parameters are dropped out, the model may not converge with the remaining parameters. Besides, the complexity of the network structure should be appropriate. A more complex network, like the Bi-LSTM network, may not necessarily lead to a better performance. During the training process, we find that the classification accuracy can increase to 99.6% on the training dataset, when using a LSTM model with two extra fully-connected layers. However, the classification accuracy remains around 80% on the testing dataset, which is a clear example for the overfitting phenomenon.
+According to the result, we can find that the best classification accuracies for the BP Neural Network model and the LSTM model are approximately the same, while the accuracy for Bi-LSTM model is slightly lower. The reason for this moight be overfitting, since the LSTM and Bi-LSTM model use much more parameters than the BP Neural Network model. The dropout layer, on the other hand, has little effect on the BP Neural Network, while affects the performance of the LSTM and Bi-LSTM model heavily. The classification accuracy of the  LSTM and Bi-LSTM model when dropout rate is 0.3 and 0.5 is much better than the rest situations. When the dropout rate is too low, toverfitting could happen due to the excessive parameters. If too many parameters are dropped out, the model might not converge with the remaining parameters. Besides, the complexity of the network structure should be appropriate. A more complex network, like the Bi-LSTM network, may not necessarily lead to a better performance. During the training process, we find that the classification accuracy can increase to 99.6% on the training dataset, when using a LSTM model with two extra fully-connected layers. However, the classification accuracy remains around 80% on the testing dataset, which is obviously caused by overfitting.
 
 ## 7.Conclusions
 
-
+In general, supervised methods performed a lot better compared to unsupervised methods based on accuracy, and all deep learnig methods provide very high accuracy models. It's also imporant to test with different parameters and set margin to avoid overfitting. 
 
 ## References
 
