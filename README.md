@@ -63,15 +63,26 @@ As a modified version of the original LSTM network, bidirectional LSTM network (
 
 Fig. 2. The structure of the LSTM network
 
-## 6. Evaluation and results 
+## 6. Model Evaluation and Data Analysis
 
-![](https://github.com/ksun86/ML-Project/blob/master/fig1.png)  
+First, we did an analysis of clustering using our dataset. We used Word2Vec to create word embeddings for our articles. Following this, we used the word vectors to create a KMeans model with 10 clusters. We picked the closest words to the centroids of these clusters and then displayed the 5 closest words in the figure below.
 
-![](https://github.com/ksun86/ML-Project/blob/master/percent_capital.png)  
+![](https://github.com/ksun86/ML-Project/blob/master/similar_words.png)
+Fig. 3. KMeans clustering of Kaggle Fake News dataset
 
-![](https://github.com/ksun86/ML-Project/blob/master/similar_words.png)  
+Our analyses then consisted of boxplots for 2 different metrics: percentage of capital words as well as title length for both reliable and unreliable articles. From the percent capital words title, we can tell that unreliable articles seems to have more capital words. Similarly, the number of words for fake article titles seems to be lower, with a higher spread. From these two figures, we can see that titles with more than about 30 words are more likely to be fake. 
 
-![](https://github.com/ksun86/ML-Project/blob/master/title_length.png)   Example Readmes
+![](https://github.com/ksun86/ML-Project/blob/master/percent_capital.png)
+Fig. 4. Boxplot for percent capital words in title
+
+![](https://github.com/ksun86/ML-Project/blob/master/title_length.png)
+Fig. 5. Boxplot for number of words in title
+
+We also performed a word count for the top5 words in each category:
+	Top 5 words&frequences for unrealiable articles: 20170 trump, 19296 clinton, 16600 people, 16128 one, 14942 us
+	Top 5 words&frequences for realiable articles: 68179 said, 64571 mr, 36119 trump, 22803 would, 22542 one
+We cannot draw any conclusions from the words, but it's interesting to see how politics would affect our accuracy ratings in the future.
+
 
 ### Results for Naive Bayes Classifier 
 
@@ -98,7 +109,7 @@ The overall classification accuracy result for each neural network is shown in T
 
 <img src="/Images/BP_Best.png" width = "300" height = "260" alt="BP_Best.png"  /><img src="/Images/LSTM_Best.png" width = "300" height = "260" alt="LSTM_Best.png"  /><img src="/Images/BiLSTM_Best.png" width = "300" height = "260" alt="BiLSTM_Best.png"  />
 
-Fig. 3. The confusion matrices (a) BP Neural Network (b) LSTM (c) BiLSTM
+Fig. 6. The confusion matrices (a) BP Neural Network (b) LSTM (c) BiLSTM
 
 | Network \ Dropout Rate      | 0     | 0.1    | 0.3    | 0.5    | 0.7    |
 | ---------- | :-----------:  | :-----------: | :-----------: | :-----------: | :-----------: |
