@@ -73,9 +73,11 @@ Fig. 3. KMeans clustering of Kaggle Fake News dataset
 Our analyses then consisted of boxplots for 2 different metrics: percentage of capital words as well as title length for both reliable and unreliable articles. From the percent capital words title, we can tell that unreliable articles seems to have more capital words. Similarly, the number of words for fake article titles seems to be lower, with a higher spread. From these two figures, we can see that titles with more than about 30 words are more likely to be fake. 
 
 ![](https://github.com/ksun86/ML-Project/blob/master/percent_capital.png)
+
 Fig. 4. Boxplot for percent capital words in title
 
 ![](https://github.com/ksun86/ML-Project/blob/master/title_length.png)
+
 Fig. 5. Boxplot for number of words in title
 
 We also performed a word count for the top5 words in each category:
