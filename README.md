@@ -114,14 +114,14 @@ However, the Naive Bayes model only classifies from a priori probability point o
 #### Support Vector Machine
 Accuracy 93.43%
 
-<img src="/Images/GMM.png" width = "300" height = "260" alt="GMM.png"  />
+<img src="/Images/GMM.png" width = "300" height = "260" alt="SVM.png"  />
 
 Fig. X. The confusion matrices for Support Vector Machine
 
 #### XGBoost
 Accuracy 91.16%
 
-<img src="/Images/GMM.png" width = "300" height = "260" alt="GMM.png"  />
+<img src="/Images/GMM.png" width = "300" height = "260" alt="XGBoost.png"  />
 
 Fig. X. The confusion matrices for XGBoost
 
