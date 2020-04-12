@@ -22,21 +22,24 @@ The data set used in training and testing the detection systems comes from Kaggl
 
 The method we use to process the raw sentences is the Doc2Vec method. The Doc2Vec method [5] is a modified algorithm based on the Word2Vec [6] method. The basic idea for the Word2Vec method is to map each word in the sentence into the vector and use the words in the rest part of the article to predict the next word. The prediction could be taken as a multi-class classification problem, while the generated vector contains the probability that each word in the dictionary exists in the next position. The Doc2Vec method introduces an extra unit on the top of each sentence that represents the ‘topic’ of the given sentence. In this case, each sentence could be mapped into the vector space and processed together, instead of being processed separately. In our project, the Doc2Vec method is used to process the dataset for all the machine learning method except the LSTM methods.
 
+<<<<<<< HEAD
 In this project, our work mainly involves analyzing the texts. In order to reduce noise, we removed all the stop words and punctuations, then convert each article to sentences to further break down the weight each unique word carries.
 
 We focused on mining particular linguistic cues, like, by finding anomalous patterns of pronouns, conjunctions, and words associated with negative emotional word usage. For example, that fake news often contains an inflated number of swear words and personal pronouns. The raw news be represented using the Bag-of-Words model, which then be modified to incorporate the relativity between the words. We used both supervised and unsupervised learning here.  For unsupervised learning, we used GMM and Kmeans; for supervised learning, we experienmented LSTM and a two layer neural network.
 
 ## 3.Unsupervised Method
-### KMeans
-### GMM
+### 3.1 Kmeans
+
+### 3.2 Gaussian Mixture Model
 
 ## 4.Supervised Method
-
-
-
-### Naive Bayes Classifier 
+### 4.1 Naive Bayes Classifier 
 
 Naive Bayes is a relatively simple algorithm, but it is often found to have very good results in the field of NLP content analysis. Here we use the naive Bayes class library in scikit-learn to classify the data. Compared to decision trees, algorithms like KNN, Naive Bayes requires fewer parameters. In scikit-learn, there are 3 naive Bayes classification algorithm classes. They are GaussianNB, MultinomialNB and BernoulliNB. Among them, GaussianNB is naive Bayes with priori Gaussian distribution, MultinomialNB is naive Bayes with priori polynomial distribution, and BernoulliNB is naive Bayes with priori Bernoulli distribution.
+
+### 4.2 Support Vector Machine
+
+### 4.3 XGBoost
 
 ## 5. Deep Learning Method
 
@@ -85,8 +88,23 @@ We also performed a word count for the top5 words in each category:
 	Top 5 words&frequences for realiable articles: 68179 said, 64571 mr, 36119 trump, 22803 would, 22542 one
 We cannot draw any conclusions from the words, but it's interesting to see how politics would affect our accuracy ratings in the future.
 
+### Results for Unsuperived Learning Models
+#### K-Means
+Accuracy 56.42%
 
-### Results for Naive Bayes Classifier 
+<img src="/Images/Kmeans.png" width = "300" height = "260" alt="Kmeans.png"  />
+
+Fig. X. The confusion matrices for Kmeans
+
+#### Gaussian Mixture Model
+Accuracy 65.37%
+
+<img src="/Images/GMM.png" width = "300" height = "260" alt="GMM.png"  />
+
+Fig. X. The confusion matrices for Gaussian Mixture Model
+
+### Results for Superived Learning Models
+#### Naive Bayes Classifier 
 
 We tried all three naive Bayesian models of sklearn. Among them, the polynomial model and the Bernoulli model perform relatively well, and can reach 0.902 and 0.908 after parameter adjustment(show in below), respectively. but the Gaussian model performs poorly, reaching only 0.7. The reason why the Gaussian model is less effective may be because it is mainly used in continuous random variables, but text analysis belongs to discrete variable analysis. The difference between the polynomial model and the Bernoulli model have different calculation granularities. The polynomial model uses words as the granularity, and the Bernoulli model uses files as the granularity. Therefore, the calculation methods of the a priori probability and the class conditional probability are different. When calculating the posterior probability, for a document B, in the polynomial model, only the words that have appeared in B will participate in the posterior probability calculation. While in the Bernoulli model, if a word does not appear in B but appeared in the global word list, those words will also participate in the calculation, but only as the "counter party". Therefore, the judgment criterion of the Bernoulli model is more comprehensive, which may be the reason why it is slightly better than the polynomial model. 
 
@@ -95,6 +113,20 @@ We tried all three naive Bayesian models of sklearn. Among them, the polynomial 
  
 
 However, the Naive Bayes model only classifies from a priori probability point of view, its classification effect will be worse than the deep learning model which have more complicate structure and much more parameters.
+
+#### Support Vector Machine
+Accuracy 93.43%
+
+<img src="/Images/SVM.png" width = "300" height = "260" alt="SVM.png"  />
+
+Fig. X. The confusion matrices for Support Vector Machine
+
+#### XGBoost
+Accuracy 91.16%
+
+<img src="/Images/XGBoost.png" width = "300" height = "260" alt="XGBoost.png"  />
+
+Fig. X. The confusion matrices for XGBoost
 
 ### 6.3 Deep Learning Methods
 #### 6.3.1 Backward-propagation Neural Network
