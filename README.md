@@ -34,7 +34,9 @@ The data set used in training and testing the detection systems comes from Kaggl
 
 Naive Bayes is a relatively simple algorithm, but it is often found to have very good results in the field of NLP content analysis. Here we use the naive Bayes class library in scikit-learn to classify the data. Compared to decision trees, algorithms like KNN, Naive Bayes requires fewer parameters. In scikit-learn, there are 3 naive Bayes classification algorithm classes. They are GaussianNB, MultinomialNB and BernoulliNB. Among them, GaussianNB is naive Bayes with priori Gaussian distribution, MultinomialNB is naive Bayes with priori polynomial distribution, and BernoulliNB is naive Bayes with priori Bernoulli distribution.
 
-## 5.evaluation and results 
+## 5. Deep Learning Method
+
+## 6. Evaluation and results 
 
 ![](https://github.com/ksun86/ML-Project/blob/master/fig1.png)  
 
@@ -59,7 +61,7 @@ However, the Naive Bayes model only classifies from a priori probability point o
 
 
 
-## 6.conclusions
+## 7.Conclusions
 
 
 
