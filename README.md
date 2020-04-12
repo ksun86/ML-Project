@@ -48,7 +48,7 @@ The traditional backward-propagation neural network [7] uses the fully-connected
 
 The neural network for the fake news classification task has three layers in general. The structure of the neural network is shown in Fig. 1. The first layer, which is the layer to read the primitive training data, has 300 input channels and 256 output channels. The hidden layer in the middle has 256 input channels and 80 output channels. The third layer, which the last one, has 80 input channels and 2 output channels. The activation function used between each layer in the middle is the ReLU function, while the activation function for the output layer is the sigmoid function, in order to fix the scope for the output values. To avoid the potential overfitting issue, which is common in the NLP tasks, two dropout layers are introduced between the first and second layer, and the second and third. These layers could randomly drop the neural nodes in the previous layer during the training process. To discuss effect of the dropout layers on the network, the dropout rate is changeable during the implementation.
 
-![](https://github.com/ksun86/ML-Project/blob/master/Images/BPNNStructure.png) 
+![](https://github.com/ksun86/ML-Project/blob/master/Images/BPNN_1.png) 
 
 Fig. 1. The structure of the backward-propagation neural network
 
@@ -59,7 +59,7 @@ The structure of the neural network is shown in Fig. 2. Unlike other method, the
 
 As a modified version of the original LSTM network, bidirectional LSTM network (Bi-LSTM) could encode the input sentences in both directions, which makes it capable to process more complex sentences. The general structure of the Bi-LSTM network is similar to the original LSTM network. The main difference between these network is that the Bi-LSTM network has LSTM units for backward propagation, so that the output size for the Bi-LSTM layer is twice as the original LSTM layer.
 
-![](https://github.com/ksun86/ML-Project/blob/master/Images/LSTMStructure.png) 
+![](https://github.com/ksun86/ML-Project/blob/master/Images/LSTM_1.png) 
 
 Fig. 2. The structure of the LSTM network
 
