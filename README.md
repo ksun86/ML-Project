@@ -58,9 +58,13 @@ The traditional backward-propagation neural network [7] uses the fully-connected
 
 The neural network for the fake news classification task has three layers in general. The structure of the neural network is shown in Fig. 1. The first layer, which is the layer to read the primitive training data, has 300 input channels and 256 output channels. The hidden layer in the middle has 256 input channels and 80 output channels. The third layer, which the last one, has 80 input channels and 2 output channels. The activation function used between each layer in the middle is the ReLU function, while the activation function for the output layer is the sigmoid function, in order to fix the scope for the output values. To avoid the potential overfitting issue, which is common in the NLP tasks, two dropout layers are introduced between the first and second layer, and the second and third. These layers could randomly drop the neural nodes in the previous layer during the training process. To discuss effect of the dropout layers on the network, the dropout rate is changeable during the implementation. 
 
-<img src="./Images/BPNN_1.png" width = "300" height = "600" alt="BPNN_1.png"  />
+<p align="center">
+<img src="./Images/BPNN_1.png" width = "300" height = "600" alt="BPNN_1.png" />
+</p>
 
-<p style="text-align:center">Fig 1. The structure of the backward-propagation neural network</p>
+<p align="center">
+Fig 1. The structure of the backward-propagation neural network
+</p>
 
 ### 5.2 LSTM Network
 
@@ -69,9 +73,13 @@ The structure of the neural network is shown in Fig. 2. Unlike other method, the
 
 As a modified version of the original LSTM network, bidirectional LSTM network (Bi-LSTM) could encode the input sentences in both directions, which makes it capable to process more complex sentences. The general structure of the Bi-LSTM network is similar to the original LSTM network. The main difference between these network is that the Bi-LSTM network has LSTM units for backward propagation, so that the output size for the Bi-LSTM layer is twice as the original LSTM layer. 
 
+<p align="center">
 <img src="./Images/LSTM_1.png" width = "300" height = "600" alt="LSTM_1.png"  />
+</p>
 
-<p style="text-align:center">Fig 2. The structure of the LSTM network</p>
+<p align="center">
+Fig 2. The structure of the LSTM network
+</p>
 
 ## 6. Model Evaluation and Data Analysis
 
@@ -79,19 +87,27 @@ As a modified version of the original LSTM network, bidirectional LSTM network (
 
 First, we did an analysis of clustering using our dataset. We used Word2Vec to create word embeddings for our articles. Following this, we used the word vectors to create a KMeans model with 10 clusters. We picked the closest words to the centroids of these clusters and then displayed the 5 closest words in the figure below.
 
+<p align="center">
 <img src="./Images/similar_words.png" width = "800" height = "500" alt="similar_words.png"  />
+</p>
 
-<p style="text-align:center">Fig 3. KMeans clustering of Kaggle Fake News dataset</p>
+<p align="center">
+Fig 3. KMeans clustering of Kaggle Fake News dataset
+</p>
 
 Our analyses then consisted of boxplots for 2 different metrics: percentage of capital words as well as title length for both reliable and unreliable articles. From the percent capital words title, we can tell that unreliable articles seems to have more capital words. Similarly, the number of words for fake article titles seems to be lower, with a higher spread. From these two figures, we can see that titles with more than about 30 words are more likely to be fake. 
 
+<p align="center">
 <img src="./Images/percent_capital.png" width = "400" height = "300" alt="percent_capital.png"  />
+</p>
 
-<p style="text-align:center">Fig 4. Boxplot for percent capital words in title</p>
+<p align="center">Fig 4. Boxplot for percent capital words in title</p>
 
+<p align="center">
 <img src="./Images/title_length.png" width = "400" height = "300" alt="title_length.png"  />
+</p>
 
-<p style="text-align:center">Fig 5. Boxplot for number of words in title</p>
+<p align="center">Fig 5. Boxplot for number of words in title</p>
 
 We also performed a word count for the top5 words in each category:
 
@@ -115,43 +131,53 @@ We cannot draw any conclusions from the words, but it's interesting to see how p
 #### K-Means
 Accuracy 56.42%
 
+<p align="center">
 <img src="./Images/Kmeans.png" width = "300" height = "260" alt="Kmeans.png"  />
+</p>
 
-<p style="text-align:center">Fig. 6 The confusion matrices for Kmeans</p>
+<p align="center">Fig. 6 The confusion matrices for Kmeans</p>
 
 #### Gaussian Mixture Model
 Accuracy 65.37%
 
+<p align="center">
 <img src="./Images/GMM.png" width = "300" height = "260" alt="GMM.png"  />
+</p>
 
-<p style="text-align:center">Fig 7. The confusion matrices for Gaussian Mixture Model</p>
+<p align="center">Fig 7. The confusion matrices for Gaussian Mixture Model</p>
 
 ### 6.3 Results for Supervised Learning Models
 #### Naive Bayes Classifier 
 
 We tried all three naive Bayesian models of sklearn. Among them, the polynomial model and the Bernoulli model perform relatively well, and can reach 0.902 and 0.908 after parameter adjustment(show in below), respectively. but the Gaussian model performs poorly, reaching only 0.7. The reason why the Gaussian model is less effective may be because it is mainly used in continuous random variables, but text analysis belongs to discrete variable analysis. The difference between the polynomial model and the Bernoulli model have different calculation granularities. The polynomial model uses words as the granularity, and the Bernoulli model uses files as the granularity. Therefore, the calculation methods of the a priori probability and the class conditional probability are different. When calculating the posterior probability, for a document B, in the polynomial model, only the words that have appeared in B will participate in the posterior probability calculation. While in the Bernoulli model, if a word does not appear in B but appeared in the global word list, those words will also participate in the calculation, but only as the "counter party". Therefore, the judgment criterion of the Bernoulli model is more comprehensive, which may be the reason why it is slightly better than the polynomial model. 
 
+<p align="center">
 <img src="./Images/MultinomialNB.png" width = "450" height = "450" alt="MultinomialNB.png"/>
-
+</p>
+<p align="center">
 <img src="./Images/Bernoulli.png" width = "450" height = "450" alt="Bernoulli.png"/>
-
-<p style="text-align:center">Fig 8. The confusion matrices for Naive Bayes Classifier: (a) Multinomial NB; (b) Bernoulli NB</p>
+</p>
+<p align="center">Fig 8. The confusion matrices for Naive Bayes Classifier: (a) Multinomial NB; (b) Bernoulli NB</p>
 
 However, the Naive Bayes model only classifies from a priori probability point of view, its classification effect will be worse than the deep learning model which have more complicate structure and much more parameters.
 
 #### Support Vector Machine
 Accuracy 93.43%
 
+<p align="center">
 <img src="./Images/SVM.png" width = "300" height = "260" alt="SVM.png"  />
+</p>
 
-<p style="text-align:center">Fig 9. The confusion matrices for Support Vector Machine</p>
+<p align="center">Fig 9. The confusion matrices for Support Vector Machine</p>
 
 #### XGBoost
 Accuracy 91.16%
 
+<p align="center">
 <img src="./Images/XGBoost.png" width = "300" height = "260" alt="XGBoost.png"  />
+</p>
 
-<p style="text-align:center">Fig 10. The confusion matrices for XGBoost</p>
+<p align="center">Fig 10. The confusion matrices for XGBoost</p>
 
 ### 6.4 Deep Learning Methods
 #### Backward-propagation Neural Network
@@ -165,16 +191,19 @@ Since the LSTM based neural networks are much more complicated than the BP netwo
 
 #### Results
 The overall classification accuracy result for each neural network is shown in Table. 1. For the traditional BP neural network, its number of parameters is 97778. The best classification result happens when the dropout rate equals to 0, which is 93.81%, though all the classification accuracy results are approximately the same. The confusion matrix for this situation is shown in Fig. 3(a).  For the LSTM network, its number of parameters for the LSTM model is 321522. The best classification result happens when the dropout rate equals to 0.3, which is 93.83%. The confusion matrix for this situation is shown in Fig. 3(b).  For the Bi-LSTM network, its number of parameters is 593022. The best classification result happens when the dropout rate equals to 0.5, which is 92.85%. The confusion matrix for this situation is shown in Fig. 3(c).  
-
+<p align="center">
 <img src="./Images/BP_Best.png" width = "300" height = "260" alt="BP_Best.png"/>
-
+</p>
+<p align="center">
 <img src="./Images/LSTM_Best.png" width = "300" height = "260" alt="LSTM_Best.png"/>
-
+</p>
+<p align="center">
 <img src="./Images/BiLSTM_Best.png" width = "300" height = "260" alt="BiLSTM_Best.png"/>
+</p>
 
-<p style="text-align:center">Fig 11. The confusion matrices for (a) BP Neural Network; (b) LSTM; (c) BiLSTM</p>
+<p align="center">Fig 11. The confusion matrices for (a) BP Neural Network; (b) LSTM; (c) BiLSTM</p>
 
-<p style="text-align:left">Table 1. The classification accuracy for each neural network</p>
+<p align="left">Table 1. The classification accuracy for each neural network</p>
 
 | Network \ Dropout Rate      | 0     | 0.1    | 0.3    | 0.5    | 0.7    |
 | ---------- | :-----------:  | :-----------: | :-----------: | :-----------: | :-----------: |
